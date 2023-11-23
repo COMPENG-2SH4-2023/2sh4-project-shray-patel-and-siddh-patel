@@ -5,8 +5,8 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    playerPos.x = 9;
-    playerPos.y = 4;
+    playerPos.x = 7;
+    playerPos.y = 15;
     playerPos.symbol = '*';
 
     // more actions to be included
@@ -30,9 +30,9 @@ void Player::updatePlayerDir()
     {
         switch(mainGameMechsRef->getInput())
         {                      
-            case 27:  // exit
-                mainGameMechsRef->setExitTrue();
-                break;
+            // case 27:  // exit
+            //     mainGameMechsRef->setExitTrue();
+            //     break;
             
             case 'a':  // LEFT (a)
                 if (myDir != RIGHT)
@@ -75,22 +75,22 @@ void Player::movePlayer()
     switch(myDir)
     {
         case LEFT:
-            playerPos.x--;
+            playerPos.y--;
             
             break; 
         
         case RIGHT:
-            playerPos.x++;
+            playerPos.y++;
             
             break; 
 
         case UP:
-            playerPos.y--;
+            playerPos.x--;
             
             break; 
 
         case DOWN:
-            playerPos.y++;
+            playerPos.x++;
             
             break;
 
@@ -100,17 +100,17 @@ void Player::movePlayer()
 
     if (playerPos.x < 1)
         {
-            playerPos.x = 18;
+            playerPos.x = mainGameMechsRef->getBoardSizeX()-2;
         }
-    else if (playerPos.x > 18)
+    else if (playerPos.x > mainGameMechsRef->getBoardSizeX()-2)
         {
             playerPos.x = 1;
         }
     else if (playerPos.y < 1)
         {
-            playerPos.y = 8;
+            playerPos.y = mainGameMechsRef->getBoardSizeY()-2;
         }
-    else if (playerPos.y > 8)
+    else if (playerPos.y > mainGameMechsRef->getBoardSizeY()-2)
         {
             playerPos.y = 1;
         }

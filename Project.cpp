@@ -7,8 +7,9 @@
 using namespace std;
 
 #define DELAY_CONST 100000
-#define X 30
-#define Y 15
+#define X 15
+#define Y 30
+char border[X][Y];
 GameMechs* game;
 Player* player;
 
@@ -59,31 +60,61 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+    player->updatePlayerDir();
+    player->movePlayer();
     
     
 }
 
 void DrawScreen(void)
 {
+    
+    int i,j;
+    objPos pObj;
+    player->getPlayerPos(pObj);
     MacUILib_clearScreen();
-    int i; // ROW
-    for ( i = 0; i < Y; i++)
+    for(i = 0; i<game->getBoardSizeX(); i++)
     {
-        int j; // COLOUM
-        for ( j = 0; j < X; j++)
-        {       
-            // Print Border
-            if (i == 0 || i == Y-1 || j == X-1 || j == 0)
+        for(j = 0; j<game->getBoardSizeY(); j++)
+        {
+            if( i==0 || i==game->getBoardSizeX()-1 || j==0 || j==game->getBoardSizeY()-1)
             {
-                MacUILib_printf("#");
+                border[i][j] = '#';
             }
-            // Print empty space to make grid
-            else 
+            else if(pObj.x == i && pObj.y== j)
             {
-                MacUILib_printf(" ");
+                border[i][j] = pObj.symbol;
+            }
+            // else if(itmBin[0].x == i && itmBin[0].y == j)
+            // {
+            //     border[i][j] = itmBin[0].symbol;
+            // }
+            // else if(itmBin[1].x == i && itmBin[1].y == j)
+            // {
+            //     border[i][j] = itmBin[1].symbol;
+            // }
+            // else if(itmBin[2].x == i && itmBin[2].y == j)
+            // {
+            //     border[i][j] = itmBin[2].symbol;
+            // }
+            // else if(itmBin[3].x == i && itmBin[3].y == j)
+            // {
+            //     border[i][j] = itmBin[3].symbol;
+            // }
+            // else if(itmBin[4].x == i && itmBin[4].y == j)
+            // {
+            //     border[i][j] = itmBin[4].symbol;
+            // }
+            else 
+            { 
+                border[i][j] = ' ' ;
+            }
+            MacUILib_printf("%c", border[i][j]);
+            if(j==29)
+            {
+                MacUILib_printf("\n");
             }
         }
-        MacUILib_printf("\n");
     }
 }
 
