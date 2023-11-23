@@ -11,7 +11,7 @@ using namespace std;
 #define Y 30
 char border[X][Y];
 GameMechs* game;
-Player* player;
+Player* myplayer;
 
 void Initialize(void);
 void GetInput(void);
@@ -46,22 +46,19 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     game = new GameMechs(X,Y);
-    player = new Player(game);
+    myplayer = new Player(game);
 
 }
 
 void GetInput(void)
 {
-    if(MacUILib_hasChar()==1)
-    {
-        game->setInput(MacUILib_getChar());
-    }
+    
 }
 
 void RunLogic(void)
 {
-    player->updatePlayerDir();
-    player->movePlayer();
+    myplayer->updatePlayerDir();
+    myplayer->movePlayer();
     
     
 }
@@ -71,7 +68,7 @@ void DrawScreen(void)
     
     int i,j;
     objPos pObj;
-    player->getPlayerPos(pObj);
+    myplayer->getPlayerPos(pObj);
     MacUILib_clearScreen();
     for(i = 0; i<game->getBoardSizeX(); i++)
     {

@@ -1,4 +1,5 @@
 #include "GameMechs.h"
+#include "MacUILib.h"
 
 GameMechs::GameMechs()
 {
@@ -36,6 +37,10 @@ bool GameMechs::getLoseFlatStatus()
 
 char GameMechs::getInput()
 {
+    if (MacUILib_hasChar() == 1)
+    {
+        input = MacUILib_getChar();
+    }
     return input;
 }
 

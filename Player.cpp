@@ -5,9 +5,8 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    playerPos.x = 7;
-    playerPos.y = 15;
-    playerPos.symbol = '*';
+    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX() /2, mainGameMechsRef->getBoardSizeY() /2, '*');
+    
 
     // more actions to be included
 }
@@ -20,53 +19,48 @@ Player::~Player()
 void Player::getPlayerPos(objPos &returnPos)
 {
     // return the reference to the playerPos arrray list
-    returnPos = playerPos;
+    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
 }
 
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
-    if(mainGameMechsRef->getInput() != 0)  // if not null character
-    {
-        switch(mainGameMechsRef->getInput())
-        {                      
-            // case 27:  // exit
-            //     mainGameMechsRef->setExitTrue();
-            //     break;
-            
-            case 'a':  // LEFT (a)
-                if (myDir != RIGHT)
-                {
-                    myDir = LEFT;
-                }
-                break;
 
-            case 'd':  // RIGHT (d)
-                if (myDir != LEFT)
-                {
-                    myDir = RIGHT;
-                }
-                break;
+    switch(mainGameMechsRef->getInput())
+    {                      
+        case 'a':  // LEFT (a)
+            if (myDir != RIGHT)
+            {
+                myDir = LEFT;
+            }
+            break;
 
-            case 'w':  // UP (w)
-                if (myDir != DOWN)
-                {
-                    myDir = UP;
-                }
-                break;
+        case 'd':  // RIGHT (d)
+            if (myDir != LEFT)
+            {
+                myDir = RIGHT;
+            }
+            break;
 
-            case 's':  // DOWN (s)
-                if (myDir != UP)
-                {
-                    myDir = DOWN;
-                }    
-                break;
+        case 'w':  // UP (w)
+            if (myDir != DOWN)
+            {
+                myDir = UP;
+            }
+            break;
 
-            default:
-                break;
-        }
-        mainGameMechsRef->clearInput();
-    }        
+        case 's':  // DOWN (s)
+            if (myDir != UP)
+            {
+                myDir = DOWN;
+            }    
+            break;
+
+        default:
+            break;
+    }
+    mainGameMechsRef->clearInput();
+    
 }
 
 void Player::movePlayer()
