@@ -65,7 +65,26 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    
+    MacUILib_clearScreen();
+    int i; // ROW
+    for ( i = 0; i < Y; i++)
+    {
+        int j; // COLOUM
+        for ( j = 0; j < X; j++)
+        {       
+            // Print Border
+            if (i == 0 || i == Y-1 || j == X-1 || j == 0)
+            {
+                MacUILib_printf("#");
+            }
+            // Print empty space to make grid
+            else 
+            {
+                MacUILib_printf(" ");
+            }
+        }
+        MacUILib_printf("\n");
+    }
 }
 
 void LoopDelay(void)
