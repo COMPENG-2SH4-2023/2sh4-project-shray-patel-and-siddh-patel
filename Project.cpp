@@ -9,7 +9,7 @@ using namespace std;
 #define DELAY_CONST 100000
 #define X 30
 #define Y 15
-GameMechs* GameMechsRef;
+GameMechs* game;
 Player* player;
 
 void Initialize(void);
@@ -26,7 +26,7 @@ int main(void)
 
     Initialize();
 
-    while(GameMechsRef->getExitFlagStatus() == false)  
+    while(game->getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -44,8 +44,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    Player *player = new Player(GameMechsRef);
-    GameMechs *game = new GameMechs();
+    game = new GameMechs(X,Y);
+    player = new Player(game);
 
 }
 
@@ -53,50 +53,13 @@ void GetInput(void)
 {
     if(MacUILib_hasChar()==1)
     {
-        input = MacUILib_getChar();
+        game->setInput(MacUILib_getChar());
     }
 }
 
 void RunLogic(void)
 {
-    if(input != 0)  // if not null character
-    {
-        switch(input)
-        {                      
-            case ' ':  // exit
-                exitFlag = 1;
-                break;
-
-            case 'w':
-                if(play_dir != DOWN)
-                {
-                    play_dir = UP;
-                }
-                break;
-            case 's':
-                if(play_dir != UP)
-                {
-                    play_dir = DOWN;
-                }
-                break;
-            case 'a':
-                if(play_dir != RIGHT)
-                {
-                    play_dir = LEFT;
-                }
-                break;
-            case 'd': 
-                if(play_dir != LEFT)
-                {
-                    play_dir = RIGHT;
-                }
-                break;
-            default:
-                break;
-
-        }
-        input = 0;
-    }
+    
     
 }
 
