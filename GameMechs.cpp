@@ -6,8 +6,8 @@ GameMechs::GameMechs()
     input = 0;
     exitFlag = false;
     loseFlag = false;
-    boardSizeX = 15;
-    boardSizeY = 30;
+    boardSizeX = 30;
+    boardSizeY = 15;
     score = 0;
 }
 
@@ -40,8 +40,13 @@ char GameMechs::getInput()
     if (MacUILib_hasChar() == 1)
     {
         input = MacUILib_getChar();
+        if (input == 27)
+        {
+            setExitTrue();
+        }
+        return input;
     }
-    return input;
+    return input = 0;
 }
 
 int GameMechs::getBoardSizeX()

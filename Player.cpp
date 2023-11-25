@@ -59,7 +59,7 @@ void Player::updatePlayerDir()
         default:
             break;
     }
-    mainGameMechsRef->clearInput();
+    
     
 }
 
@@ -69,22 +69,22 @@ void Player::movePlayer()
     switch(myDir)
     {
         case LEFT:
-            playerPos.y--;
+            playerPos.x--;
             
             break; 
         
         case RIGHT:
-            playerPos.y++;
+            playerPos.x++;
             
             break; 
 
         case UP:
-            playerPos.x--;
+            playerPos.y--;
             
             break; 
 
         case DOWN:
-            playerPos.x++;
+            playerPos.y++;
             
             break;
 

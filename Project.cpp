@@ -7,9 +7,7 @@
 using namespace std;
 
 #define DELAY_CONST 100000
-#define X 15
-#define Y 30
-char border[X][Y];
+
 GameMechs* game;
 Player* myplayer;
 
@@ -45,74 +43,53 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    game = new GameMechs(X,Y);
+    game = new GameMechs(30,15);
     myplayer = new Player(game);
 
 }
 
 void GetInput(void)
 {
-    
+    //game->getInput();
 }
 
 void RunLogic(void)
 {
     myplayer->updatePlayerDir();
     myplayer->movePlayer();
-    
+
+    game->clearInput();
     
 }
 
 void DrawScreen(void)
 {
     
-    int i,j;
     objPos pObj;
     myplayer->getPlayerPos(pObj);
     MacUILib_clearScreen();
-    for(i = 0; i<game->getBoardSizeX(); i++)
+    for(int i = 0; i<game->getBoardSizeY(); i++)
     {
-        for(j = 0; j<game->getBoardSizeY(); j++)
+        for(int j = 0; j<game->getBoardSizeX(); j++)
         {
-            if( i==0 || i==game->getBoardSizeX()-1 || j==0 || j==game->getBoardSizeY()-1)
+            if( i==0 || i==game->getBoardSizeY()-1 || j==0 || j==game->getBoardSizeX()-1)
             {
-                border[i][j] = '#';
+                MacUILib_printf("#");
             }
-            else if(pObj.x == i && pObj.y== j)
+            else if (i == pObj.y && j == pObj.x)
             {
-                border[i][j] = pObj.symbol;
+                MacUILib_printf("%c", pObj.symbol);
             }
-            // else if(itmBin[0].x == i && itmBin[0].y == j)
-            // {
-            //     border[i][j] = itmBin[0].symbol;
-            // }
-            // else if(itmBin[1].x == i && itmBin[1].y == j)
-            // {
-            //     border[i][j] = itmBin[1].symbol;
-            // }
-            // else if(itmBin[2].x == i && itmBin[2].y == j)
-            // {
-            //     border[i][j] = itmBin[2].symbol;
-            // }
-            // else if(itmBin[3].x == i && itmBin[3].y == j)
-            // {
-            //     border[i][j] = itmBin[3].symbol;
-            // }
-            // else if(itmBin[4].x == i && itmBin[4].y == j)
-            // {
-            //     border[i][j] = itmBin[4].symbol;
-            // }
             else 
             { 
-                border[i][j] = ' ' ;
-            }
-            MacUILib_printf("%c", border[i][j]);
-            if(j==29)
-            {
-                MacUILib_printf("\n");
+                MacUILib_printf(" ");
             }
         }
+        MacUILib_printf("\n");
     }
+
+    MacUILib_printf("Score %d, Player Pos: <%d, %d>\n",
+                    game->getScore(), pObj.x, pObj.y);
 }
 
 void LoopDelay(void)
@@ -126,4 +103,7 @@ void CleanUp(void)
     MacUILib_clearScreen();    
   
     MacUILib_uninit();
+
+    //detele game
+    //delete myplayer
 }

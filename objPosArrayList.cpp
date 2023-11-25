@@ -23,26 +23,24 @@ int objPosArrayList::getSize()
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
-    if(sizeList != sizeArray) //checks if the numbrt of elements is 
+    if(sizeList != sizeArray) //checks if the number of elements is 
     {
         for(int i = sizeList; i>0; i--)
         {
-            aList[i] = aList[i-1];
+            aList[i].setObjPos(aList[i-1]);
         }
-        aList[0] = thisPos;
+        aList[0].setObjPos(thisPos);
         sizeList++;
     }
-    
 }
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
     if( sizeList >= 0 && sizeList < sizeArray)
     {
-        aList[sizeList] = thisPos;
+        aList[sizeList].setObjPos(thisPos);
         sizeList++;
     }
-
 }
 
 void objPosArrayList::removeHead()
@@ -51,45 +49,38 @@ void objPosArrayList::removeHead()
     {
         for(int i=0; i<sizeList+1; i++)
         {
-            aList[i] = aList[i+1];
+            aList[i].setObjPos(aList[i+1]);
         }
         sizeList--;
     }
-    
 }
 
 void objPosArrayList::removeTail()
 {
     if(sizeList >0 && sizeList<sizeArray)
     {
-        aList[sizeList -1] = aList[sizeList];
+        aList[sizeList -1].setObjPos(aList[sizeList]);
         sizeList--;
     }
-    
-
 }
 
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
-
-    returnPos = aList[0];
-
+    returnPos.setObjPos(aList[0]);
 }
 
 void objPosArrayList::getTailElement(objPos &returnPos)
 {
     if(sizeList >0 && sizeList<=sizeArray)
     {
-        returnPos = aList[sizeList -1];
+        returnPos.setObjPos(aList[sizeList -1]);
     }
-    
-
 }
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
-    if(index<sizeArray)
+    if(index < sizeArray)
     {
-        returnPos = aList[index];
+        returnPos.setObjPos(aList[index]);
     }
 }
