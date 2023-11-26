@@ -5,21 +5,28 @@ Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-    playerPos.setObjPos(mainGameMechsRef->getBoardSizeX() /2, mainGameMechsRef->getBoardSizeY() /2, '*');
+    objPos temp;
+    temp.setObjPos(mainGameMechsRef->getBoardSizeX() /2, mainGameMechsRef->getBoardSizeY() /2, '*');
     
 
     // more actions to be included
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(temp);
+    playerPosList->insertHead(temp);
+    playerPosList->insertHead(temp);
+    playerPosList->insertHead(temp);
 }
 
 Player::~Player()
 {
     // delete any heap members here
+    delete playerPosList;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+objPosArrayList* Player::getPlayerPos()
 {
     // return the reference to the playerPos arrray list
-    returnPos.setObjPos(playerPos.x, playerPos.y, playerPos.symbol);
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -65,26 +72,29 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
+    //Snake Head Implementation
+    objPos curHead; //This object holds the information about the current snake head
+    playerPosList->getHeadElement(curHead);
     // PPA3 Finite State Machine logic
     switch(myDir)
     {
         case LEFT:
-            playerPos.x--;
+            curHead.x--;
             
             break; 
         
         case RIGHT:
-            playerPos.x++;
+            curHead.x++;
             
             break; 
 
         case UP:
-            playerPos.y--;
+            curHead.y--;
             
             break; 
 
         case DOWN:
-            playerPos.y++;
+            curHead.y++;
             
             break;
 
@@ -92,22 +102,104 @@ void Player::movePlayer()
             break;
     }
 
-    if (playerPos.x < 1)
+    if (curHead.x < 1)
         {
-            playerPos.x = mainGameMechsRef->getBoardSizeX()-2;
+            curHead.x = mainGameMechsRef->getBoardSizeX()-2;
         }
-    else if (playerPos.x > mainGameMechsRef->getBoardSizeX()-2)
+    else if (curHead.x > mainGameMechsRef->getBoardSizeX()-2)
         {
-            playerPos.x = 1;
+            curHead.x = 1;
         }
-    else if (playerPos.y < 1)
+    else if (curHead.y < 1)
         {
-            playerPos.y = mainGameMechsRef->getBoardSizeY()-2;
+            curHead.y = mainGameMechsRef->getBoardSizeY()-2;
         }
-    else if (playerPos.y > mainGameMechsRef->getBoardSizeY()-2)
+    else if (curHead.y > mainGameMechsRef->getBoardSizeY()-2)
         {
-            playerPos.y = 1;
+            curHead.y = 1;
         }
 
+    
+    playerPosList->insertHead(curHead);
+    //The Current head will be updated to be the new head of the snake 
+    // objPos ftemp;
+    // foodObj->getFoodPos(ftemp);
+    
+    // for(int i = 1; i<playerPosList->getSize(); i++)
+    // {
+    //     objPos temp1;
+    //     playerPosList->getElement(temp1,i);
+    //     if(curHead.x == temp1.x && curHead.y == temp1.y)
+    //     {
+    //         mainGameMechsRef->setLoseTrue();
+    //         mainGameMechsRef->setExitTrue();
+    //     }
+    // }
+    playerPosList->removeTail();
 
+
+
+
+    // if(curHead.x == ftemp.x && curHead.y == ftemp.y )
+    // {
+    //     playerPosList->insertHead(curHead);
+    //     mainGameMechsRef->incrementScore();
+    //     mainGameMechsRef->incrementScore();
+    //     foodObj->generateFood(playerPosList);
+    // }
+    // else 
+    // {
+    //     playerPosList->insertHead(curHead);
+    //     playerPosList->removeTail();
+    // }
+
+    //Collision with Food
+    //If there is no Collision with the food then remove the tail
+    
+    
+    
+    
 }
+
+// bool Player::checkFoodConsumption()
+// {
+//     objPos temp;
+//     objPos ftemp;
+//     playerPosList->getHeadElement(temp);
+//     foodObj->getFoodPos(ftemp);
+
+//     if(temp.x == ftemp.x && temp.y == ftemp.y)
+//     {
+//         mainGameMechsRef->incrementScore();
+//         foodObj->generateFood(playerPosList);
+//         return true;
+//     }
+//     else
+//     {
+//         return false;
+//     }
+
+// }
+
+// void Player::increasePlayerLength()
+// {
+//     objPos current;
+//     playerPosList->insertHead(current);
+// }
+
+// bool Player::checkSelfCollision()
+// {
+//     objPos temp;
+//     playerPosList->getHeadElement(temp);
+//     for(int i=1; i<playerPosList->getSize();i++)
+//     {
+//         objPos temp1;
+//         playerPosList->getElement(temp1,i);
+//         if(temp.x == temp1.x && temp.y == temp1.y)
+//         {
+//             return false;
+//         }
+//     }
+
+//     return true;
+// }

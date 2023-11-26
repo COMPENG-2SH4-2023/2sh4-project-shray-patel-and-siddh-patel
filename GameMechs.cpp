@@ -79,12 +79,13 @@ void GameMechs::setInput(char this_input)
     input = this_input;
 }
 
-/*
+
 void GameMechs::incrementScore()
 {
+    score++;
 
 }
-*/
+
 void GameMechs::clearInput()
 {
     input = 0;

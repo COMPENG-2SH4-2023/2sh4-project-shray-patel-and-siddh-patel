@@ -1,8 +1,11 @@
 #include <iostream>
+#include <time.h>
 #include "MacUILib.h"
 #include "objPos.h"
 #include "Player.h"
 #include "GameMechs.h"
+#include "objPosArrayList.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -10,6 +13,9 @@ using namespace std;
 
 GameMechs* game;
 Player* myplayer;
+Food* fObj;
+objPosArrayList* playerBody;
+
 
 void Initialize(void);
 void GetInput(void);
@@ -45,6 +51,11 @@ void Initialize(void)
 
     game = new GameMechs(30,15);
     myplayer = new Player(game);
+    fObj = new Food();
+    playerBody = new objPosArrayList();
+
+    srand(time(NULL));
+    fObj->generateFood(playerBody);
 
 }
 
@@ -57,28 +68,51 @@ void RunLogic(void)
 {
     myplayer->updatePlayerDir();
     myplayer->movePlayer();
-
     game->clearInput();
     
 }
 
 void DrawScreen(void)
 {
-    
-    objPos pObj;
-    myplayer->getPlayerPos(pObj);
     MacUILib_clearScreen();
+
+    bool drawn;
+    
+    playerBody = myplayer->getPlayerPos();
+    objPos tempPlay;
+    
+    objPos fPos;
+    fObj->getFoodPos(fPos);
+
+    
     for(int i = 0; i<game->getBoardSizeY(); i++)
     {
         for(int j = 0; j<game->getBoardSizeX(); j++)
         {
+            drawn = false;
+
+            for(int k=0; k<playerBody->getSize(); k++)
+            {
+                playerBody->getElement(tempPlay,k);
+                if(tempPlay.y == i && tempPlay.x == j)
+                {
+                    MacUILib_printf("%c", tempPlay.symbol);
+                    drawn = true;
+                    break;
+                }
+            }
+
+            if(drawn) continue;
+            //If the player body was drawn dont draw anything below
+
+            //Draw Border
             if( i==0 || i==game->getBoardSizeY()-1 || j==0 || j==game->getBoardSizeX()-1)
             {
                 MacUILib_printf("#");
             }
-            else if (i == pObj.y && j == pObj.x)
+            else if(i == fPos.y && j == fPos.x)
             {
-                MacUILib_printf("%c", pObj.symbol);
+                MacUILib_printf("%c", fPos.symbol);
             }
             else 
             { 
@@ -88,8 +122,8 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("Score %d, Player Pos: <%d, %d>\n",
-                    game->getScore(), pObj.x, pObj.y);
+    MacUILib_printf("Score %d\n",game->getScore());
+    MacUILib_printf("Food Pos: <%d,%d>\n",fPos.x,fPos.y);
 }
 
 void LoopDelay(void)
@@ -104,6 +138,8 @@ void CleanUp(void)
   
     MacUILib_uninit();
 
-    //detele game
-    //delete myplayer
+    delete game;
+    delete myplayer;
+    delete fObj;
+    delete playerBody;
 }
