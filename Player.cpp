@@ -119,39 +119,14 @@ void Player::movePlayer()
             curHead.y = 1;
         }
 
-    
-    playerPosList->insertHead(curHead);
     //The Current head will be updated to be the new head of the snake 
-    // objPos ftemp;
-    // foodObj->getFoodPos(ftemp);
+    playerPosList->insertHead(curHead);
     
-    // for(int i = 1; i<playerPosList->getSize(); i++)
-    // {
-    //     objPos temp1;
-    //     playerPosList->getElement(temp1,i);
-    //     if(curHead.x == temp1.x && curHead.y == temp1.y)
-    //     {
-    //         mainGameMechsRef->setLoseTrue();
-    //         mainGameMechsRef->setExitTrue();
-    //     }
-    // }
+    //Removes the Tail so that the movement is complete
     playerPosList->removeTail();
 
 
 
-
-    // if(curHead.x == ftemp.x && curHead.y == ftemp.y )
-    // {
-    //     playerPosList->insertHead(curHead);
-    //     mainGameMechsRef->incrementScore();
-    //     mainGameMechsRef->incrementScore();
-    //     foodObj->generateFood(playerPosList);
-    // }
-    // else 
-    // {
-    //     playerPosList->insertHead(curHead);
-    //     playerPosList->removeTail();
-    // }
 
     //Collision with Food
     //If there is no Collision with the food then remove the tail
