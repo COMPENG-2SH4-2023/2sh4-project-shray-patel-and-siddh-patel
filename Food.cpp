@@ -57,6 +57,6 @@ void Food::generateFood(objPosArrayList* blockOff)
 //Getter to get the Food items position
 void Food::getFoodPos(objPos &returnPos)
 {
-    returnPos.setObjPos(foodPos.x, foodPos.y, foodPos.symbol);
+    returnPos.setObjPos(foodPos);
 } 
 

@@ -50,8 +50,8 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     game = new GameMechs(30,15);
-    myplayer = new Player(game);
     fObj = new Food();
+    myplayer = new Player(game,fObj);
     playerBody = new objPosArrayList();
 
     srand(time(NULL));
@@ -61,7 +61,8 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    //game->getInput();
+    game->getInput();
+    
 }
 
 void RunLogic(void)
@@ -69,7 +70,7 @@ void RunLogic(void)
     myplayer->updatePlayerDir();
     myplayer->movePlayer();
     game->clearInput();
-    
+
 }
 
 void DrawScreen(void)
@@ -124,6 +125,18 @@ void DrawScreen(void)
 
     MacUILib_printf("Score %d\n",game->getScore());
     MacUILib_printf("Food Pos: <%d,%d>\n",fPos.x,fPos.y);
+
+    if(game->getLoseFlagStatus() && game->getExitFlagStatus())
+    {
+        MacUILib_clearScreen(); 
+        MacUILib_printf("You ate yourself! \nGame Score: %d\n", game->getScore());
+    }
+    else if(game->getExitFlagStatus())
+    {
+        MacUILib_clearScreen(); 
+        MacUILib_printf("You Rage Quit! \nGame Score: %d\n", game->getScore());
+    }
+
 }
 
 void LoopDelay(void)
@@ -134,7 +147,7 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+       
   
     MacUILib_uninit();
 

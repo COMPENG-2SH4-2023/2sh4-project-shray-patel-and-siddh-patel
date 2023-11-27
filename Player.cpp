@@ -1,9 +1,10 @@
 #include "Player.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef, Food* foodRef)
 {
     mainGameMechsRef = thisGMRef;
+    foodObj = foodRef;
     myDir = STOP;
     objPos temp;
     temp.setObjPos(mainGameMechsRef->getBoardSizeX() /2, mainGameMechsRef->getBoardSizeY() /2, '*');
@@ -12,9 +13,7 @@ Player::Player(GameMechs* thisGMRef)
     // more actions to be included
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(temp);
-    playerPosList->insertHead(temp);
-    playerPosList->insertHead(temp);
-    playerPosList->insertHead(temp);
+    
 }
 
 Player::~Player()
@@ -66,8 +65,6 @@ void Player::updatePlayerDir()
         default:
             break;
     }
-    
-    
 }
 
 void Player::movePlayer()
@@ -120,61 +117,78 @@ void Player::movePlayer()
         }
 
     //The Current head will be updated to be the new head of the snake 
-    playerPosList->insertHead(curHead);
+    
     
     //Removes the Tail so that the movement is complete
-    playerPosList->removeTail();
+    //playerPosList->removeTail();
 
-
-
+    
 
     //Collision with Food
     //If there is no Collision with the food then remove the tail
     
-    
-    
+
+    if (!checkSelfCollision())
+    {
+        if (checkFoodConsumption())
+        {
+            playerPosList->insertHead(curHead);
+        }
+        else
+        {
+            playerPosList->insertHead(curHead);
+            playerPosList->removeTail();
+        }
+    }
+    else
+    {
+        mainGameMechsRef->setLoseTrue();
+        mainGameMechsRef->setExitTrue();
+    }
     
 }
 
-// bool Player::checkFoodConsumption()
-// {
-//     objPos temp;
-//     objPos ftemp;
-//     playerPosList->getHeadElement(temp);
-//     foodObj->getFoodPos(ftemp);
+bool Player::checkFoodConsumption()
+{
+    objPos head;
+    objPos ftemp;
+    playerPosList->getHeadElement(head);
+    foodObj->getFoodPos(ftemp);
 
-//     if(temp.x == ftemp.x && temp.y == ftemp.y)
-//     {
-//         mainGameMechsRef->incrementScore();
-//         foodObj->generateFood(playerPosList);
-//         return true;
-//     }
-//     else
-//     {
-//         return false;
-//     }
+    if (head.isPosEqual(&ftemp))
+    {
+        mainGameMechsRef->incrementScore();
+        foodObj->generateFood(playerPosList);
+        return true;
+    }
+    
+    return false;
 
-// }
+}
 
-// void Player::increasePlayerLength()
-// {
-//     objPos current;
-//     playerPosList->insertHead(current);
-// }
+void Player::increasePlayerLength()
+{
+    objPos current;
+    playerPosList->insertHead(current);
+}
 
-// bool Player::checkSelfCollision()
-// {
-//     objPos temp;
-//     playerPosList->getHeadElement(temp);
-//     for(int i=1; i<playerPosList->getSize();i++)
-//     {
-//         objPos temp1;
-//         playerPosList->getElement(temp1,i);
-//         if(temp.x == temp1.x && temp.y == temp1.y)
-//         {
-//             return false;
-//         }
-//     }
+bool Player::checkSelfCollision()
+{
+    objPos head;
+    objPos tempCmp;
+    bool flag = false;
+    
+    playerPosList->getHeadElement(head);
 
-//     return true;
-// }
+    for(int i=1; i<playerPosList->getSize();i++)
+    {
+        playerPosList->getElement(tempCmp,i);
+        flag = tempCmp.isPosEqual(&head);
+        
+        if(flag)
+        {
+            break;
+        }
+    }
+    return flag;
+}
