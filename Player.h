@@ -34,7 +34,6 @@ class Player
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
         Food* foodObj;
-        objPos* RefObj;
 };
 
 #endif

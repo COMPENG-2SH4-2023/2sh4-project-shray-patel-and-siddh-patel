@@ -52,7 +52,7 @@ void Initialize(void)
     game = new GameMechs(30,15);
     fObj = new Food();
     myplayer = new Player(game,fObj);
-    playerBody = new objPosArrayList();
+    playerBody = myplayer->getPlayerPos();
 
     srand(time(NULL));
     fObj->generateFood(playerBody);
@@ -154,5 +154,5 @@ void CleanUp(void)
     delete game;
     delete myplayer;
     delete fObj;
-    delete playerBody;
+    //delete playerBody;
 }
