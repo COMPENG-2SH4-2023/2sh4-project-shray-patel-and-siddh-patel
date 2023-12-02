@@ -28,7 +28,6 @@ objPosArrayList* Player::getPlayerPos()
     return playerPosList;
 }
 
-
 // This Method updates the direction of the player using a  FSM (finite state machine)
 void Player::updatePlayerDir()
 {
@@ -104,7 +103,6 @@ void Player::movePlayer()
             break;
     }
 
-
     // If statments to check boundry wrap around 
     // Basically, it checks if the player is at the ends of the x board size or the Y size and it updates the coordinates accordingly
     if (curHead.x < 1)
@@ -123,15 +121,6 @@ void Player::movePlayer()
         {
             curHead.y = 1;
         }
-
-    
-    
-    
-    //Removes the Tail so that the movement is complete
-    //playerPosList->removeTail();
-
-    
-
     
     // If statments to update the player body list implementation so that the player body moves like a snake
 
@@ -161,7 +150,6 @@ void Player::movePlayer()
     }
     
 }
-
 
 //This method checks if the player has eaten the food 
 bool Player::checkFoodConsumption()

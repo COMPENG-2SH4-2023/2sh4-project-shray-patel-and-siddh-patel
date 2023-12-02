@@ -21,7 +21,6 @@ int objPosArrayList::getSize()
     return sizeList; //returns the amount of elements currently in the list 
 }
 
-
 //This method inserts a head in the list 
 void objPosArrayList::insertHead(objPos thisPos)
 {
@@ -41,7 +40,6 @@ void objPosArrayList::insertHead(objPos thisPos)
     }
 }
 
-
 //This method inserts a tail after the last element in the list
 void objPosArrayList::insertTail(objPos thisPos)
 {
@@ -56,7 +54,6 @@ void objPosArrayList::insertTail(objPos thisPos)
     }
 
 }
-
 
 //This method removes the head of the player snake and shifts all the elements to fill the space
 void objPosArrayList::removeHead()
@@ -76,7 +73,6 @@ void objPosArrayList::removeHead()
     }
     
 }
-
 
 //This method removes the tail of the player snake
 void objPosArrayList::removeTail()

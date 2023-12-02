@@ -167,8 +167,6 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-       
-  
     MacUILib_uninit();
 
     //Freeing Memory for previously allocated memory for the pointers to other classes.
