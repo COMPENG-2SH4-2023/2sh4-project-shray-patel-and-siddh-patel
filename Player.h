@@ -15,25 +15,23 @@ class Player
     // You will include more data members and member functions to complete your design.
 
     public:
-        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state
+        enum Dir {UP, DOWN, LEFT, RIGHT, STOP};  // This is the direction state enum
 
-        Player(GameMechs* thisGMRef,Food* foodRef);
-        ~Player();
+        Player(GameMechs* thisGMRef,Food* foodRef); //Constructor with references to gameMechs and food class as parameters
+        ~Player(); //Destructor 
 
         objPosArrayList* getPlayerPos(); // Upgrade this in iteration 3.
-        void updatePlayerDir();
-        void movePlayer();
-        bool checkFoodConsumption();
-        bool checkSelfCollision();
-        void increasePlayerLength();
+        void updatePlayerDir(); // This method updates the players position 
+        void movePlayer(); // This method is called to increment the position of the player in order to move it 
+        bool checkFoodConsumption(); // This method will be called to check if the player ate the food 
+        bool checkSelfCollision(); // This method checks whether the player as tried to eat itself ( overlapped itself)
 
     private:
-        objPosArrayList *playerPosList;   // Upgrade this in iteration 3.       
-        enum Dir myDir;
+        objPosArrayList *playerPosList;   // This is the reference to the objPosArrayList class, basically the    
+        enum Dir myDir; //enum that holds the states for the direction of the player
 
-        // Need a reference to the Main Game Mechanisms
-        GameMechs* mainGameMechsRef;
-        Food* foodObj;
+        GameMechs* mainGameMechsRef; //Reference to game mechanics class
+        Food* foodObj; //Reference to Food Class 
 };
 
 #endif

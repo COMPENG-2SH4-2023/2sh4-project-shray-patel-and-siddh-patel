@@ -8,23 +8,27 @@
 class objPosArrayList
 {
     private:
-        objPos* aList;
-        int sizeList;
-        int sizeArray;
+        objPos* aList; //Array List to hold the snakes body
+        int sizeList; // The number of elements currently in the snake
+        int sizeArray; //The total size of the array list
 
     public:
-        objPosArrayList();
-        ~objPosArrayList();
+        objPosArrayList(); //Constructor
+        ~objPosArrayList(); //Destructor
 
-        int getSize();
+        //Getter Methods
+        int getSize(); 
+        void getHeadElement(objPos &returnPos);
+        void getTailElement(objPos &returnPos);
+        void getElement(objPos &returnPos, int index);
+
+        //Other Functional Methods
         void insertHead(objPos thisPos);
         void insertTail(objPos thisPos);
         void removeHead();
         void removeTail();
         
-        void getHeadElement(objPos &returnPos);
-        void getTailElement(objPos &returnPos);
-        void getElement(objPos &returnPos, int index);
+       
 };
 
 #endif

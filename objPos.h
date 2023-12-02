@@ -4,22 +4,24 @@
 class objPos
 {
     public:
-        int x;
-        int y;
-        char symbol;
+        int x; // X position of Object
+        int y; // Y Position of Object
+        char symbol; // Symbol of the object
 
-        objPos();
+        objPos(); // Constructor
         objPos(objPos &o); // copy constructor
-        objPos(int xPos, int yPos, char sym);
+        objPos(int xPos, int yPos, char sym); // Specialized constructor
 
-        void setObjPos(objPos o);        
-        void setObjPos(int xPos, int yPos, char sym);  
-        void getObjPos(objPos &returnPos);
-        char getSymbol();
+        //Setter Methods
+        void setObjPos(objPos o);    // Sets the x and y position and the symbol of the object based on the (object passed through)     
+        void setObjPos(int xPos, int yPos, char sym);  // Sets the x, y and the symbol of the object based on the 3 parameters passed through
 
-        bool isPosEqual(const objPos* refPos);
-        
-        char getSymbolIfPosEqual(const objPos* refPos);
+        //Getter Methods
+        void getObjPos(objPos &returnPos); // Gets the objects (x,y) position and the symbol based on the object passed through by reference
+        char getSymbol(); // Gets the symbol of the object
+
+        //Other Methods
+        bool isPosEqual(const objPos* refPos); // This method checks if 2 objects have the same (x,y) coordinates and returns either true or false 
 };
 
 #endif
