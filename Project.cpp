@@ -140,9 +140,10 @@ void DrawScreen(void)
     }
 
     //Print Statments to print out below the game board, showing stats
-    MacUILib_printf("Score %d\n",game->getScore());
-    MacUILib_printf("Food Pos: <%d,%d>\n",fPos.x,fPos.y);
-
+    MacUILib_printf("\n=============================\n");
+    MacUILib_printf("Score: %d\n",game->getScore());
+    MacUILib_printf("Press ESC to exit!");
+    MacUILib_printf("\n=============================\n");
 
     //This is a if statment to decide which message is supposed to be displayed based on whether the user lost or quit the game
     //This is based on the status of the lose and exit flag
